@@ -1,0 +1,50 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+.header-main{
+    background-color: rgb(179, 150, 54);
+    color: rgb(241, 245, 249);
+    width: 100%;
+    height: 2cm;
+    }
+    .header-ul{
+        display: flex;
+        list-style: none;
+        margin: 10px;
+        padding-top: 20px;
+    }
+    .header-list a{
+        text-decoration: none;
+        color: rgb(242, 241, 241);
+    }
+    .header-list{
+        text-align: center;
+        margin: 1rem;
+    }
+    .header-list a:hover,
+    .header-list a:active,
+    .header-list a.active{
+        color: rgb(49, 49, 185);
+        font-size: large;
+    }
+    .name, .email{
+     border-radius: 5px;
+     font: inherit;
+    border-color: 1px solid rgb(186, 154, 105);
+    margin: 0.5rem;
+    width: auto;
+    text-align: center;
+    }
+    .submit{
+        border-radius: 7px;
+        background-color: rgb(169, 215, 215);
+    }
+    .submit:hover{
+        background-color: rgba(76, 56, 192, 0.811);
+        color: beige;
+        border-radius: 10px;
+    }
+    .form-list{
+        margin: 1rem;
+    }
