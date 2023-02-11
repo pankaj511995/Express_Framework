@@ -3,23 +3,49 @@ const rou=exp.Router()
 const fs=require('fs')
 
 
-rou.use('/login',((req,res)=>{
-    // res.send('<form onsubmit="localStorage.setItem(`username`, document.getElementById(`username`).value)action="/chatWith1" method="POST" >')
-    res.send(
-   ` <form action="/chatWith1" method="POST" ><input type="text" name="uname" placeholder="userename" id="username" ></input>
-    <button type="submit">Send</button></form>`)
-}))
-rou.use('/chatWith1',(req,res)=>fs.writeFile('group/loginid.txt',(req.body.uname),e=>e?console.log(e):res.redirect('/chatWith')))
+# rou.use('/login',((req,res)=>{
+#     // res.send('<form onsubmit="localStorage.setItem(`username`, document.getElementById(`username`).value)action="/chatWith1" method="POST" >')
+#     res.send(
+#    ` <form action="/chatWith1" method="POST" ><input type="text" name="uname" placeholder="userename" id="username" ></input>
+#     <button type="submit">Send</button></form>`)
+# }))
+# rou.use('/chatWith1',(req,res)=>fs.writeFile('group/loginid.txt',(req.body.uname),e=>e?console.log(e):res.redirect('/chatWith')))
 
-rou.use('/chatWith',((req,res)=>{
-        const data= fs.readFileSync('group/chating.txt',"utf-8",e=>console.log(e))
-    res.send(`<div>${data}</div>
-    <form action="/sent" method="POST"><input type="text" name="mess" placeholder="type message"></input>
+# rou.use('/chatWith',((req,res)=>{
+#         const data= fs.readFileSync('group/chating.txt',"utf-8",e=>console.log(e))
+#     res.send(`<div>${data}</div>
+#     <form action="/sent" method="POST"><input type="text" name="mess" placeholder="type message"></input>
+#     <button type="submit">Send</button></form>`)
+# }))
+# rou.use('/sent',(req,res)=>{
+#     let message=req.body.mess
+#     let user=fs.readFileSync('group/loginid.txt')
+#     fs.appendFile('group/chating.txt',`: ${user}->${message}`,err=>err? console.log(err):res.redirect('/chatWith'))
+
+
+
+rou.get('/',((req,res)=>{
+    fs.readFile('group/chating.txt',(err,data)=>{
+        if(err){
+            console.log(err)
+        data='empty'
+    }
+    res.send(`${data}<form onSubmit="document.getElementById('username').value=localStorage.getItem('username')"  action="/" method="POST" >
+   <input type="text" name="message" id="message" ></input>
+   <input type="hidden" name="username" id="username"></input>
     <button type="submit">Send</button></form>`)
+    
+})
 }))
-rou.use('/sent',(req,res)=>{
-    let message=req.body.mess
-    let user=fs.readFileSync('group/loginid.txt')
-    fs.appendFile('group/chating.txt',`: ${user}->${message}`,err=>err? console.log(err):res.redirect('/chatWith'))
+rou.post('/',(req,res)=>{
+    console.log(req.body.username, req.body.message)
+    fs.writeFile('group/chating.txt',`${req.body.username}:->${req.body.message}`,{flag :'a'},e=>e?console.log(e):res.redirect('/'))
+})
+
+rou.use('/login',((req,res)=>{
+    res.send(`<form onSubmit="localStorage.setItem('username', document.getElementById('username').value)" action="/">
+    <input id="username" type="text" name"username">
+	<button type="submit">add</button></form>`)
+}))
 })
 module.exports=rou;
